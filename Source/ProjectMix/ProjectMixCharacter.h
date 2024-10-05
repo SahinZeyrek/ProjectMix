@@ -5,12 +5,19 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+//#include "StateMachine/StateMachineComponent.h"
+
+#include "EnhancedInputComponent.h"
 #include "ProjectMixCharacter.generated.h"
 
 class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
+class UStateMachineComponent;
+class UBaseState;
+class UIdleState;
+//class URunState;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
@@ -32,6 +39,7 @@ class AProjectMixCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputMappingContext* DefaultMappingContext;
 
+public:
 	/** Jump Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* JumpAction;
@@ -44,17 +52,18 @@ class AProjectMixCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
-public:
+
 	AProjectMixCharacter();
 	
+	UEnhancedInputComponent* GetInputComponent() const {return InputComponent;};
 
-protected:
 
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+protected:
 			
 
 protected:
@@ -69,5 +78,14 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-};
+private:
+	UStateMachineComponent* StateMachineComponent;
+	UEnhancedInputComponent* InputComponent;
+
+	// STATES
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UIdleState> IdleState;
+	
+
+};	
 

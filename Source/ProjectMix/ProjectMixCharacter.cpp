@@ -7,9 +7,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
-#include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "StateMachine/StateMachineComponent.h"
+#include "StateMachine/IdleState.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -50,6 +51,10 @@ AProjectMixCharacter::AProjectMixCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	StateMachineComponent = CreateDefaultSubobject<UStateMachineComponent>(TEXT("StateMachine"));
+	
+	//IdleState = CreateDefaultSubobject<UIdleState>(TEXT("IdleState"));
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -67,6 +72,7 @@ void AProjectMixCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+	StateMachineComponent->SetState(IdleState.GetDefaultObject(), this);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -75,17 +81,18 @@ void AProjectMixCharacter::BeginPlay()
 void AProjectMixCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
+	InputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	if (InputComponent) {
 		
 		// Jumping
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+		InputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+		InputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
 		// Moving
-		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AProjectMixCharacter::Move);
+		InputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AProjectMixCharacter::Move);
 
 		// Looking
-		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProjectMixCharacter::Look);
+		InputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProjectMixCharacter::Look);
 	}
 	else
 	{
