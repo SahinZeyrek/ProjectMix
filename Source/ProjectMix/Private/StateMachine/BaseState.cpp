@@ -22,6 +22,7 @@ void UBaseState::HandleInput(AProjectMixCharacter* character, const FInputAction
 {
 }
 
+
 FString& UBaseState::GetName()
 {
 	return stateString;

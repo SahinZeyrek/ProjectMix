@@ -9,6 +9,7 @@
 /**
  *  
  */
+class UStateMachineComponent;
 UCLASS(Blueprintable)
 class PROJECTMIX_API UBaseState : public UObject
 {
@@ -24,11 +25,15 @@ public:
 
 	virtual void HandleInput(AProjectMixCharacter* character, const FInputActionValue& input);
 
+	//virtual void Move();
+	//virtual void Look();
 	virtual FString& GetName();
 
 protected:
 	UPROPERTY(EditAnywhere)
 	FString stateString;
-
+	
+	UPROPERTY(VisibleAnywhere)
+	AProjectMixCharacter* PlayerChar;
 
 };

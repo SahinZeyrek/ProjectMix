@@ -26,11 +26,6 @@ public:
 
 	virtual void HandleInput(AProjectMixCharacter* character, const FInputActionValue& input);
 
-	// STATE DEPENDENT FUNCTIONS
-	void Jump();
-	void StopJumping();
-	void Move();
-	void Look();
 
 private:
 	/** Jump Input Action */
@@ -46,5 +41,9 @@ private:
 	UInputAction* LookAction;
 	
 
-	AProjectMixCharacter* PlayerChar;
+	// STATE DEPENDENT FUNCTIONS
+	void Jump();
+	void StopJumping();
+	void Move();
+	void Look();
 };

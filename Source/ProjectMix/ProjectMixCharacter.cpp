@@ -127,7 +127,8 @@ void AProjectMixCharacter::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
-
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Black, LookAxisVector.ToString());
+	//LookAxisVector.Normalize();
 	if (Controller != nullptr)
 	{
 		// add yaw and pitch input to controller

@@ -2,14 +2,20 @@
 
 
 #include "StateMachine/IdleState.h"
+#include "StateMachine/StateMachineComponent.h"
 #include "ProjectMix/ProjectMixCharacter.h"
 
 void UIdleState::StateEnter(AProjectMixCharacter* character)
 {
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Green, TEXT("Entering Idle State"));
+
 	// TO DO. CHANGE FUNCTION BINDIUNGS TO ACTION. UNBIND CURRENT ACTIONS.
 	// Set up action bindings
+	//character->GetInputComponent()->ClearActionValueBindings();
 	UEnhancedInputComponent* inputComp = character->GetInputComponent();
-	inputComp->ClearBindingsForObject(character);
+	inputComp->ClearActionBindings();
+	//inputComp->ClearActionValueBindings();
+
 	PlayerChar = character;
 	if (inputComp) {
 
@@ -37,16 +43,19 @@ void UIdleState::StateUpdate(AProjectMixCharacter* character, float deltaTime)
 	// State dependent logic
 	if (character->GetVelocity().Length() > 0)
 	{
-		GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Green, TEXT("Player velocity is higher than 0"));
-		//UStateMachineComponent* comp = character->GetComponentByClass<UStateMachineComponent>();
-		//comp->sets
+		//GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Green, TEXT("Player velocity is higher than 0"));
+		UStateMachineComponent* comp = character->GetComponentByClass<UStateMachineComponent>();
+		comp->SetState(comp->RequestState("Run"),PlayerChar);
 	}
 }
 
 void UIdleState::StateExit(AProjectMixCharacter* character)
 {
 	// UNBIND all current actions
-	character->GetInputComponent()->ClearBindingsForObject(character);
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Green, TEXT("Exiting State Idle"));
+
+	//character->GetInputComponent()->ClearBindingsForObject(character);
+
 }
 
 void UIdleState::HandleInput(AProjectMixCharacter* character, const FInputActionValue& input)

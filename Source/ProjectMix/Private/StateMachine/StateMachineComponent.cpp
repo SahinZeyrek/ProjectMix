@@ -71,6 +71,8 @@ UBaseState* UStateMachineComponent::RequestState(const FString& requestedState)
 			return Cast<UBaseState>(state->GetDefaultObject());
 		}
 	}
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Red, TEXT("REQUESTED STATE NOT FOUND"));
+
 	return nullptr;
 }
 
