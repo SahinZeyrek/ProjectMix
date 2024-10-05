@@ -34,6 +34,7 @@ public:
 	void UpdateState(AProjectMixCharacter* Character, float DeltaTime);
 
 	void HandleInput(AProjectMixCharacter* Character, const FInputActionValue& Input);
+	
 	UBaseState* RequestState(const FString& requestedState);
 
 private:

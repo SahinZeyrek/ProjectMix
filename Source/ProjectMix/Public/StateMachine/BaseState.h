@@ -28,12 +28,33 @@ public:
 	//virtual void Move();
 	//virtual void Look();
 	virtual FString& GetName();
-
+	//virtual void Jump();
+	//virtual void StopJumping();
+	//virtual void Move();
+	//virtual void Look();
 protected:
 	UPROPERTY(EditAnywhere)
 	FString stateString;
 	
 	UPROPERTY(VisibleAnywhere)
 	AProjectMixCharacter* PlayerChar;
+
+	UPROPERTY(EditAnywhere)
+	UEnhancedInputComponent* ownerInputComp;
+	
+	UPROPERTY()
+	UStateMachineComponent* ownerStateMachineComp;
+
+	///** Jump Input Action */
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	//UInputAction* JumpAction;
+	//
+	///** Move Input Action */
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	//UInputAction* MoveAction;
+	//
+	///** Look Input Action */
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	//UInputAction* LookAction;
 
 };

@@ -2,12 +2,23 @@
 
 
 #include "StateMachine/BaseState.h"
-
+#include "StateMachine/StateMachineComponent.h"
 
 
 void UBaseState::StateEnter(AProjectMixCharacter* character)
 {
-	//StateEnterBlueprint(character);
+	PlayerChar = character;
+	if (ownerInputComp == nullptr)
+	{
+		ownerInputComp = PlayerChar->GetInputComponent();
+	}
+	//ownerInputComp->ClearActionBindings();
+	if (ownerStateMachineComp == nullptr)
+	{
+		ownerStateMachineComp = PlayerChar->GetComponentByClass<UStateMachineComponent>();
+	}
+
+	PlayerChar->BindDefaultActions();
 }
 
 void UBaseState::StateUpdate(AProjectMixCharacter* character, float deltaTime)
@@ -27,3 +38,23 @@ FString& UBaseState::GetName()
 {
 	return stateString;
 }
+
+//void UBaseState::Jump()
+//{
+//	PlayerChar->Jump();
+//}
+//
+//void UBaseState::StopJumping()
+//{
+//	PlayerChar->StopJumping();
+//}
+//
+//void UBaseState::Move()
+//{
+//	PlayerChar->Move(PlayerChar->GetInputComponent()->GetBoundActionValue(MoveAction));
+//}
+//
+//void UBaseState::Look()
+//{
+//	PlayerChar->Look(PlayerChar->GetInputComponent()->GetBoundActionValue(LookAction));
+//}
