@@ -24,5 +24,11 @@ public:
 
 	virtual void HandleInput(AProjectMixCharacter* character, const FInputActionValue& input);
 
+	virtual FString& GetName();
+
+protected:
+	UPROPERTY(EditAnywhere)
+	FString stateString;
+
 
 };

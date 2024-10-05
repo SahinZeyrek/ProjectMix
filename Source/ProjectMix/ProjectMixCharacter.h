@@ -52,6 +52,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	// STATES
 
 	AProjectMixCharacter();
 	
@@ -63,6 +64,8 @@ public:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	TArray<TSubclassOf<UBaseState>> GetStates() const { return States; }
 protected:
 			
 
@@ -82,10 +85,9 @@ private:
 	UStateMachineComponent* StateMachineComponent;
 	UEnhancedInputComponent* InputComponent;
 
-	// STATES
+
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<UIdleState> IdleState;
-	
+	TArray<TSubclassOf<UBaseState>> States;
 
 };	
 

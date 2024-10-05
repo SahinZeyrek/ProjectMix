@@ -3,10 +3,7 @@
 
 #include "StateMachine/BaseState.h"
 
-UBaseState::UBaseState()
-{
 
-}
 
 void UBaseState::StateEnter(AProjectMixCharacter* character)
 {
@@ -23,4 +20,9 @@ void UBaseState::StateExit(AProjectMixCharacter* character)
 
 void UBaseState::HandleInput(AProjectMixCharacter* character, const FInputActionValue& input)
 {
+}
+
+FString& UBaseState::GetName()
+{
+	return stateString;
 }

@@ -7,7 +7,7 @@
 #include "BaseState.h"
 #include "StateMachineComponent.generated.h"
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTMIX_API UStateMachineComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -16,6 +16,11 @@ public:
 	// Sets default values for this component's properties
 	UStateMachineComponent();
 
+	UPROPERTY(VisibleAnywhere)
+	UBaseState* CurrentState;
+
+	UPROPERTY(EditAnywhere)
+	TArray<TSubclassOf<UBaseState>> ownerStates;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -29,8 +34,7 @@ public:
 	void UpdateState(AProjectMixCharacter* Character, float DeltaTime);
 
 	void HandleInput(AProjectMixCharacter* Character, const FInputActionValue& Input);
+	UBaseState* RequestState(const FString& requestedState);
 
 private:
-	UPROPERTY(EditAnywhere)
-	UBaseState* CurrentState;
 };

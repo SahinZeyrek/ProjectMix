@@ -72,7 +72,7 @@ void AProjectMixCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
-	StateMachineComponent->SetState(IdleState.GetDefaultObject(), this);
+	StateMachineComponent->SetState(StateMachineComponent->RequestState(TEXT("Idle")), this);
 }
 
 //////////////////////////////////////////////////////////////////////////

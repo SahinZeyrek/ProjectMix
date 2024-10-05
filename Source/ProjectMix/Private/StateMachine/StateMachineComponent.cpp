@@ -20,7 +20,6 @@ void UStateMachineComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
 }
 
 
@@ -60,5 +59,18 @@ void UStateMachineComponent::HandleInput(AProjectMixCharacter* Character, const 
 	{
 		CurrentState->HandleInput(Character, Input);
 	}
+}
+
+UBaseState* UStateMachineComponent::RequestState(const FString& requestedState)
+{
+	for (TSubclassOf<UBaseState> state : Cast<AProjectMixCharacter>(GetOwner())->GetStates())
+	{
+		FString* name = &state.GetDefaultObject()->GetName();
+		if (*name == requestedState)
+		{
+			return Cast<UBaseState>(state->GetDefaultObject());
+		}
+	}
+	return nullptr;
 }
 
