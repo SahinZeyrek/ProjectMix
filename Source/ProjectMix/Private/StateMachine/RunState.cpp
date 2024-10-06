@@ -2,6 +2,8 @@
 
 
 #include "StateMachine/RunState.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
 #include "StateMachine/StateMachineComponent.h"
 
 void URunState::StateEnter(AProjectMixCharacter* character)
@@ -14,6 +16,14 @@ void URunState::StateEnter(AProjectMixCharacter* character)
 
 void URunState::StateUpdate(AProjectMixCharacter* character, float deltaTime)
 {
+	if (character->GetCharacterMovement()->IsFalling())
+	{
+		if (ownerInputComp)
+		{
+			ownerStateMachineComp->SetState(ownerStateMachineComp->RequestState("Air"), PlayerChar);
+			return;
+		}
+	}
 	if (character->GetVelocity().IsNearlyZero(FLT_EPSILON))
 	{
 		ownerStateMachineComp->SetState(ownerStateMachineComp->RequestState("Idle"), PlayerChar);

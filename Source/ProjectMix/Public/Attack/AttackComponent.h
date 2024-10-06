@@ -9,6 +9,8 @@
 #include "AttackComponent.generated.h"
 class AProjectMixCharacter;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAttackSignature);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTMIX_API UAttackComponent : public UActorComponent
 {
@@ -18,6 +20,10 @@ public:
 	// Sets default values for this component's properties
 	UAttackComponent();
 
+	UPROPERTY(BlueprintAssignable)
+	FOnAttackSignature OnAttackDelegate;
+
+	UFUNCTION()
 	void Attack();
 	void AltAttack();
 	// Called every frame
@@ -26,10 +32,19 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Attack String")
 	TArray<UAnimMontage*> AttackString;
 
+	UPROPERTY(EditAnywhere, Category = "Aerial Attack String")
+	TArray<UAnimMontage*> AirAttackString;
+
+	//UPROPERTY()
+	TArray<UAnimMontage*>* CurrentAttackString;
+
 	UFUNCTION()
 	void SetCanAttack(bool canAttack = true) { bCanAttack = canAttack; }
 	UFUNCTION()
 	void SetReceiveInput(bool receiveInput = true) { bReceiveInput = receiveInput; }
+
+	void EnterAerialMode();
+	void ExitAerialMode();
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

@@ -37,6 +37,7 @@ void UStateMachineComponent::SetState(UBaseState* NewState, AProjectMixCharacter
 	{
 		CurrentState->StateExit(Character);
 	}
+	PreviousState = CurrentState;
 	CurrentState = NewState;
 
 	if (CurrentState)

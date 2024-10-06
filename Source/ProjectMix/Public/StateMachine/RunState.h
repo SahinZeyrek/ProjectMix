@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
 #include "StateMachine/BaseState.h"
+#include "UObject/NoExportTypes.h"
 #include "RunState.generated.h"
 
 /**

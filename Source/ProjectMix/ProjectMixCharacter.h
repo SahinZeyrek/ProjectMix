@@ -8,6 +8,7 @@
 //#include "StateMachine/StateMachineComponent.h"
 
 #include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 #include "ProjectMixCharacter.generated.h"
 
 class USpringArmComponent;
@@ -64,6 +65,7 @@ protected:
 	virtual void BeginPlay();
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -91,7 +93,7 @@ private:
 	UInputAction* LookAction;
 
 
-
+	TArray<FEnhancedInputActionEventBinding*> ActionBindings;
 
 };	
 

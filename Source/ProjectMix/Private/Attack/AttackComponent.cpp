@@ -14,6 +14,18 @@ UAttackComponent::UAttackComponent()
 }
 
 
+void UAttackComponent::EnterAerialMode()
+{
+	CurrentAttackCounter = 0;
+	CurrentAttackString = &AirAttackString;
+}
+
+void UAttackComponent::ExitAerialMode()
+{
+	CurrentAttackCounter = 0;
+	CurrentAttackString = &AttackString;
+}
+
 // Called when the game starts
 void UAttackComponent::BeginPlay()
 {
@@ -25,6 +37,7 @@ void UAttackComponent::BeginPlay()
 	{
 		input->BindAction(AttackAction, ETriggerEvent::Started, this, &UAttackComponent::Attack);
 	}
+	CurrentAttackString = &AttackString;
 	// ...
 	
 }
@@ -34,10 +47,11 @@ void UAttackComponent::Attack()
 {
 	if (bReceiveInput && bCanAttack)
 	{
-		OwnerAnimInstance->Montage_Play(AttackString[CurrentAttackCounter]);
+		OnAttackDelegate.Broadcast();
+		OwnerAnimInstance->Montage_Play((*CurrentAttackString)[CurrentAttackCounter]);
 	}
 	++CurrentAttackCounter;
-	if (CurrentAttackCounter > (AttackString.Num() - 1))
+	if (CurrentAttackCounter > ((*CurrentAttackString).Num() - 1))
 	{
 		CurrentAttackCounter = 0;
 	}

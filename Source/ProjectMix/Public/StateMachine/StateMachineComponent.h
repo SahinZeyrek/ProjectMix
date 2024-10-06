@@ -19,6 +19,10 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UBaseState* CurrentState;
 
+
+	UPROPERTY(VisibleAnywhere)
+	UBaseState* PreviousState;
+
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<UBaseState>> ownerStates;
 protected:

@@ -85,14 +85,20 @@ void AProjectMixCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	if (InputComponent) {
 		
 		// Jumping
-		InputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
-		InputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+		FEnhancedInputActionEventBinding* JumpStartBinding = &InputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+		FEnhancedInputActionEventBinding* JumpStopBinding = &InputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
 		// Moving
-		InputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AProjectMixCharacter::Move);
+		FEnhancedInputActionEventBinding* MoveBinding = &InputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AProjectMixCharacter::Move);
 
 		// Looking
-		InputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProjectMixCharacter::Look);
+		FEnhancedInputActionEventBinding* LookBinding = &InputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProjectMixCharacter::Look);
+
+		// Store the bindings
+		ActionBindings.Add(JumpStartBinding);
+		ActionBindings.Add(JumpStopBinding);
+		ActionBindings.Add(MoveBinding);
+		ActionBindings.Add(LookBinding);
 	}
 	else
 	{
@@ -139,5 +145,19 @@ void AProjectMixCharacter::Look(const FInputActionValue& Value)
 
 void AProjectMixCharacter::BindDefaultActions()
 {
+	if (InputComponent)
+	{
+		for (const FEnhancedInputActionEventBinding* Binding : ActionBindings)
+		{
+			bool b = InputComponent->RemoveBindingByHandle((*Binding).GetHandle());
+			if (b)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("removed bindings"));
+			}
+		}
+
+		// Clear the stored bindings to ensure they are not used later
+		ActionBindings.Empty();
+	}
 	SetupPlayerInputComponent(InputComponent);
 }

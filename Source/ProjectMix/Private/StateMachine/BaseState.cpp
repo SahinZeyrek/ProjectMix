@@ -17,7 +17,6 @@ void UBaseState::StateEnter(AProjectMixCharacter* character)
 	{
 		ownerStateMachineComp = PlayerChar->GetComponentByClass<UStateMachineComponent>();
 	}
-
 	PlayerChar->BindDefaultActions();
 }
 
