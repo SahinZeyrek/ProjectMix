@@ -9,12 +9,13 @@
 
 void UIdleState::StateEnter(AProjectMixCharacter* character)
 {
+	UBaseState::StateEnter(character);
 	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Green, TEXT("Entering Idle State"));
+	ownerAttackComponent->BindAttackAction();
 
 	// TO DO. CHANGE FUNCTION BINDIUNGS TO ACTION. UNBIND CURRENT ACTIONS.
 	// Set up action bindings
 	//character->GetInputComponent()->ClearActionValueBindings();
-	UBaseState::StateEnter(character);
 	
 }
 
@@ -45,6 +46,7 @@ void UIdleState::StateExit(AProjectMixCharacter* character)
 {
 	// UNBIND all current actions
 	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Green, TEXT("Exiting State Idle"));
+	ownerAttackComponent->UnbindAttackAction();
 
 	
 

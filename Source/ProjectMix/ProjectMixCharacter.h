@@ -46,7 +46,7 @@ public:
 
 	AProjectMixCharacter();
 	
-	UEnhancedInputComponent* GetInputComponent() const {return InputComponent;};
+	UEnhancedInputComponent* GetInputComponent() const {return InputComponent;}
 
 
 	/** Called for movement input */
@@ -58,6 +58,9 @@ public:
 	TArray<TSubclassOf<UBaseState>> GetStates() const { return States; }
 	
 	void BindDefaultActions();
+
+	UFUNCTION(BlueprintCallable)
+	void SetCanMove(bool canMove) { bCanMove = canMove; }
 
 protected:
 	
@@ -87,6 +90,8 @@ private:
 	/** Move Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* MoveAction;
+
+	bool bCanMove = true;
 
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))

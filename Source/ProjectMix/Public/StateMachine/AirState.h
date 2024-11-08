@@ -28,10 +28,18 @@ public:
 
 	virtual void HandleInput(AProjectMixCharacter* character, const FInputActionValue& input);
 
+
+	UFUNCTION()
+	void ActivateGravity();
+
+	FTimerHandle GravityStartTimer;
+	FTimerDelegate GravityStartTimerDelegate;
+
 private:
 	UFUNCTION()
 	void StopGravity();
-
-	UAttackComponent* ownerAttackComponent;
-	
+	bool bDidAttack;
+	UPROPERTY(EditAnywhere)
+	float MaxAirTime = 1.5f;
+	float CurrentAirTime;
 };

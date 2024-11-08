@@ -26,6 +26,27 @@ void UAttackComponent::ExitAerialMode()
 	CurrentAttackString = &AttackString;
 }
 
+void UAttackComponent::BindAttackAction()
+{
+	if (!OwnerInputComponent)
+	{
+
+		AProjectMixCharacter* owner = Cast<AProjectMixCharacter>(GetOwner());
+		OwnerInputComponent = owner->GetInputComponent();
+	}
+	AttackActionBinding = &OwnerInputComponent->BindAction(AttackAction, ETriggerEvent::Started, this, &UAttackComponent::Attack);
+}
+
+void UAttackComponent::UnbindAttackAction()
+{
+	if (!OwnerInputComponent)
+	{
+		AProjectMixCharacter* owner = Cast<AProjectMixCharacter>(GetOwner());
+		OwnerInputComponent = owner->GetInputComponent();
+	}
+	OwnerInputComponent->RemoveBindingByHandle(AttackActionBinding->GetHandle());
+}
+
 // Called when the game starts
 void UAttackComponent::BeginPlay()
 {

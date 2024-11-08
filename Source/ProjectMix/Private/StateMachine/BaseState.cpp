@@ -5,6 +5,7 @@
 #include "StateMachine/StateMachineComponent.h"
 
 
+
 void UBaseState::StateEnter(AProjectMixCharacter* character)
 {
 	PlayerChar = character;
@@ -16,6 +17,10 @@ void UBaseState::StateEnter(AProjectMixCharacter* character)
 	if (ownerStateMachineComp == nullptr)
 	{
 		ownerStateMachineComp = PlayerChar->GetComponentByClass<UStateMachineComponent>();
+	}
+	if (ownerAttackComponent == nullptr)
+	{
+		ownerAttackComponent = PlayerChar->GetComponentByClass<UAttackComponent>();
 	}
 	PlayerChar->BindDefaultActions();
 }

@@ -38,13 +38,20 @@ public:
 	//UPROPERTY()
 	TArray<UAnimMontage*>* CurrentAttackString;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void SetCanAttack(bool canAttack = true) { bCanAttack = canAttack; }
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void SetReceiveInput(bool receiveInput = true) { bReceiveInput = receiveInput; }
 
 	void EnterAerialMode();
 	void ExitAerialMode();
+
+	UFUNCTION(BlueprintCallable)
+	void BindAttackAction();
+
+	UFUNCTION(BlueprintCallable)
+	void UnbindAttackAction();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -62,4 +69,8 @@ private:
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* AttackAction;
+
+	FEnhancedInputActionEventBinding* AttackActionBinding;
+
+	UEnhancedInputComponent* OwnerInputComponent;
 };

@@ -11,7 +11,7 @@ void URunState::StateEnter(AProjectMixCharacter* character)
 	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Green, TEXT("Entering Run State"));
 
 	UBaseState::StateEnter(character);
-
+	ownerAttackComponent->BindAttackAction();
 }
 
 void URunState::StateUpdate(AProjectMixCharacter* character, float deltaTime)
@@ -33,7 +33,8 @@ void URunState::StateUpdate(AProjectMixCharacter* character, float deltaTime)
 void URunState::StateExit(AProjectMixCharacter* character)
 {
 	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Green, TEXT("Exiting Run State"));
-	UEnhancedInputComponent* inputComp = character->GetInputComponent();
+	
+	ownerAttackComponent->UnbindAttackAction();
 
 }
 

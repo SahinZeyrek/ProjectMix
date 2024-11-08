@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ProjectMix/ProjectMixCharacter.h"
-
+#include "Attack/AttackComponent.h"
 #include "BaseState.generated.h"
 /**
  *  
@@ -25,13 +25,8 @@ public:
 
 	virtual void HandleInput(AProjectMixCharacter* character, const FInputActionValue& input);
 
-	//virtual void Move();
-	//virtual void Look();
 	virtual FString& GetName();
-	//virtual void Jump();
-	//virtual void StopJumping();
-	//virtual void Move();
-	//virtual void Look();
+
 protected:
 	UPROPERTY(EditAnywhere)
 	FString stateString;
@@ -45,16 +40,7 @@ protected:
 	UPROPERTY()
 	UStateMachineComponent* ownerStateMachineComp;
 
-	///** Jump Input Action */
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	//UInputAction* JumpAction;
-	//
-	///** Move Input Action */
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	//UInputAction* MoveAction;
-	//
-	///** Look Input Action */
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	//UInputAction* LookAction;
+	UPROPERTY()
+	UAttackComponent* ownerAttackComponent;
 
 };
